@@ -1,105 +1,26 @@
-[![Build Status](https://ci.inria.fr/malai/job/malai_core/badge/icon)](https://ci.inria.fr/malai/job/malai_core/) [![Build Status](https://ci.inria.fr/malai/job/malai_javafx/badge/icon)](https://ci.inria.fr/malai/job/malai_javafx/)<br/>
 
-## Examples
+An example of how to use Interacto to develop a JavaFX applications.
+This app follows the MVP pattern: the presenters (package 'instrument') binds the model to the view. These two last do not know each others.
+If you move this bindings to the view, this becomes an MVC pattern.
 
-The following Java code defines an undoable action that changes the unit system used in a drawing editor.
+### Packages
 
-```java
-public class SetUnit extends ActionImpl implements Undoable {
-	private Unit unit;
-	private Unit oldUnit;
+'draw': the main class.
+'command': the GUI commands that users can produce while interacting with the GUI.
+'instrument': the controllers/presenters/... that receives events from the GUI and that transform them into commands
+'model': the model of the app. Knows nothing about the view, the instruments, and the commands
+'view': the JavaFX view
 
-	@Override
-	public boolean canDo() { // Checks whether the action can be executed
-		return unit != null;
-	}
-	
-	@Override
-	protected void doActionBody() { // Execution of the action.
-		oldUnit = ScaleRuler.getUnit();
-		redo();
-	}
-	
-	@Override
-	public void undo() { // Undoes the action
-		ScaleRuler.setUnit(oldUnit);
-	}
+### Requirements
 
-	@Override
-	public void redo() { // Redoes the action
-		ScaleRuler.setUnit(unit);
-	}
+Java 11 is required.
 
-	@Override
-	public String getUndoName() { // Provides a short textual description of this undoable action.
-		return "Changing the unit";
-	}
-    //...
-}
-```
+### Build
 
-This action can be then used in an instrument to be binded to a predefined user interaction and widgets.
+`mvn clean package` does the job.
 
-```java
-// An instrument is a controller/presenter/viewModel/component/etc: 
-// it gather events produced by widgets as user interactions into actions that modify the system.
-public class PreferencesSetter extends JfxInstrument implements Initializable {
-    @FXML private ComboBox<String> unitChoice;
-    //...
+### execution
 
-    @Override
-    protected void configureBindings() throws IllegalAccessException, InstantiationException {
-        //...
-        // Defines an widget binding that binds a combobox to the action SetUnit
-        bindComboBox(SetUnit.class,  // The type of the action to produce
-            action -> action.setUnit(Unit.getUnit(unitChoice.getSelectionModel().getSelectedItem())), // The initialisation of the action
-            unitChoice); // The source widget to listen
-    }
-}
-```
-
-
-# Implementations
-
-
-Malai fully supports **Java Swing** and **JavaFX**. A **TypeScript/Javascript** version is in progress.
-
-# How to use
-
-As Maven libraries. In your POM file, adds the Malai repositories:
-
-```xml
-    <repositories>
-        <repository>
-            <id>mavenInriaSnapshot</id>
-            <name>http://maven.inria.fr-snapshots</name>
-            <url>http://maven.inria.fr/artifactory/malai-public-snapshot</url>
-        </repository>
-        <repository>
-            <id>mavenInriaRelease</id>
-            <name>http://maven.inria.fr-releases</name>
-            <url>http://maven.inria.fr/artifactory/malai-public-release</url>
-        </repository>
-    </repositories>
-```
-
-And adds the dependencies:
-
-```xml
-        <dependency>
-            <groupId>org.malai</groupId>
-            <artifactId>malai.core</artifactId>
-            <version>3.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.malai</groupId>
-            <artifactId>malai.javafx</artifactId>
-            <version>3.0-SNAPSHOT</version>
-        </dependency>
-```
-
-
-# Who uses Malai?
-
-
-[Latexdraw](https://github.com/arnobl/latexdraw) is a vector drawing editors for LaTeX. It is developed on the top of Malai JavaFX.
+The `dist` folder is the packaged app. 
+No JVM is required to run the app since `dist` contains both the app and a tiny JVM dedicated to the app.
+Double-click on `dist/bin/run` to launch the app.
