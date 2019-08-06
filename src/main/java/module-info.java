@@ -5,10 +5,10 @@ module interacto.ex.drawingEditor {
 	requires javafx.fxml;
 	requires javafx.controls;
 
-	exports io.interacto.ex.draw to javafx.graphics;
-	exports io.interacto.ex.draw.instrument to javafx.fxml;
-	exports io.interacto.ex.draw.view to javafx.fxml;
+	exports io.github.interacto.ex.draw to javafx.graphics;
+	exports io.github.interacto.ex.draw.instrument to javafx.fxml;
+	exports io.github.interacto.ex.draw.view to javafx.fxml;
 
-	opens io.interacto.ex.draw.instrument to javafx.fxml;
-	opens io.interacto.ex.draw.command to interacto.javafx;
+	opens io.github.interacto.ex.draw.instrument to javafx.fxml;
+	opens io.github.interacto.ex.draw.command to interacto.javafx;
 }

@@ -1,10 +1,10 @@
-package io.interacto.ex.draw.instrument;
+package io.github.interacto.ex.draw.instrument;
 
-import io.interacto.command.library.Redo;
-import io.interacto.command.library.Undo;
-import io.interacto.jfx.instrument.JfxInstrument;
-import io.interacto.jfx.undo.FXUndoCollector;
-import io.interacto.undo.UndoCollector;
+import io.github.interacto.command.library.Redo;
+import io.github.interacto.command.library.Undo;
+import io.github.interacto.jfx.instrument.JfxInstrument;
+import io.github.interacto.jfx.undo.FXUndoCollector;
+import io.github.interacto.undo.UndoCollector;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;

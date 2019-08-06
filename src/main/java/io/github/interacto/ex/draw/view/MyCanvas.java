@@ -1,4 +1,4 @@
-package io.interacto.ex.draw.view;
+package io.github.interacto.ex.draw.view;
 
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;

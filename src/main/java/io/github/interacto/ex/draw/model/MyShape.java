@@ -1,4 +1,4 @@
-package io.interacto.ex.draw.model;
+package io.github.interacto.ex.draw.model;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.Property;

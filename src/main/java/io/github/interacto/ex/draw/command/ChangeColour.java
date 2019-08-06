@@ -1,7 +1,7 @@
-package io.interacto.ex.draw.command;
+package io.github.interacto.ex.draw.command;
 
-import io.interacto.ex.draw.model.MyShape;
-import io.interacto.undo.Undoable;
+import io.github.interacto.ex.draw.model.MyShape;
+import io.github.interacto.undo.Undoable;
 import java.util.ResourceBundle;
 import javafx.scene.paint.Color;
 

@@ -1,4 +1,4 @@
-package io.interacto.ex.util;
+package io.github.interacto.ex.util;
 
 import javafx.scene.ImageCursor;
 import javafx.scene.paint.Color;

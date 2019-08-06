@@ -1,7 +1,7 @@
-package io.interacto.ex.draw.command;
+package io.github.interacto.ex.draw.command;
 
-import io.interacto.command.CommandImpl;
-import io.interacto.ex.draw.model.MyShape;
+import io.github.interacto.command.CommandImpl;
+import io.github.interacto.ex.draw.model.MyShape;
 
 abstract class ShapeCmd extends CommandImpl {
 	MyShape shape;

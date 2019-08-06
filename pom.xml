@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.interacto</groupId>
+    <groupId>io.github.interacto</groupId>
     <artifactId>example-jfx-drawingeditor</artifactId>
-    <version>3.3</version>
+    <version>3.4-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -106,7 +106,7 @@
                             <arguments>
                                 <argument>--update</argument>
                                 <argument>--file=${project.build.directory}/modules/${project.build.finalName}.jar</argument>
-                                <argument>--main-class=io.interacto.ex.draw.Editor</argument>
+                                <argument>--main-class=io.github.interacto.ex.draw.Editor</argument>
                                 <argument>--module-version=${project.version}</argument>
                             </arguments>
                         </configuration>
@@ -123,7 +123,7 @@
                             <arguments>
                                 <argument>--module-path=${project.build.directory}/modules:${jmods.path}/jmods</argument>
                                 <argument>--add-modules=interacto.ex.drawingEditor</argument>
-                                <argument>--launcher=run=interacto.ex.drawingEditor/io.interacto.ex.draw.Editor</argument>
+                                <argument>--launcher=run=interacto.ex.drawingEditor/io.github.interacto.ex.draw.Editor</argument>
                                 <argument>--output=${project.build.directory}/drawingEditor-${project.version}</argument>
                                 <argument>--strip-debug</argument>
                                 <argument>--compress=2</argument>
@@ -139,7 +139,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.interacto</groupId>
+            <groupId>io.github.interacto</groupId>
             <artifactId>interacto-javafx</artifactId>
             <version>${project.version}</version>
         </dependency>

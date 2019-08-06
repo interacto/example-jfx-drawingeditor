@@ -1,6 +1,6 @@
-package io.interacto.ex.draw.learning;
+package io.github.interacto.ex.draw.learning;
 
-import io.interacto.jfx.interaction.help.CancelDnDHelpAnimation;
+import io.github.interacto.jfx.interaction.help.CancelDnDHelpAnimation;
 import javafx.animation.Transition;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;

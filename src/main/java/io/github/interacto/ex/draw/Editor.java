@@ -1,7 +1,7 @@
-package io.interacto.ex.draw;
+package io.github.interacto.ex.draw;
 
-import io.interacto.command.CommandsRegistry;
-import io.interacto.undo.UndoCollector;
+import io.github.interacto.command.CommandsRegistry;
+import io.github.interacto.undo.UndoCollector;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

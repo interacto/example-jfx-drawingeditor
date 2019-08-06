@@ -1,6 +1,6 @@
-package io.interacto.ex.draw.command;
+package io.github.interacto.ex.draw.command;
 
-import io.interacto.jfx.command.ProgressableCmdImpl;
+import io.github.interacto.jfx.command.ProgressableCmdImpl;
 
 /**
  * A fake saving command to show how a command that longs can be handled.

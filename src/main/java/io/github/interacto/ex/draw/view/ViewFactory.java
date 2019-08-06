@@ -1,7 +1,7 @@
-package io.interacto.ex.draw.view;
+package io.github.interacto.ex.draw.view;
 
-import io.interacto.ex.draw.model.MyRect;
-import io.interacto.ex.draw.model.MyShape;
+import io.github.interacto.ex.draw.model.MyRect;
+import io.github.interacto.ex.draw.model.MyShape;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
