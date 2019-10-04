@@ -61,22 +61,23 @@ public class Pencil extends JfxInstrument implements Initializable {
 		// A DnD interaction with the left button of the mouse will produce an AddShape command while interacting on the canvas.
 		// A temporary view of the created shape is created and displayed by the canvas.
 		// This view is removed at the end of the interaction.
-		nodeBinder(new DnD(), i -> new AddShape(drawing, new MyRect(i.getSrcLocalPoint().getX(), i.getSrcLocalPoint().getY()))).on(canvas).
-			first((i, c) -> canvas.setTmpShape(ViewFactory.INSTANCE.createViewShape(c.getShape()))).
-			then((i, c) -> {
+		nodeBinder(new DnD(), i -> new AddShape(drawing, new MyRect(i.getSrcLocalPoint().getX(), i.getSrcLocalPoint().getY())))
+			.on(canvas)
+			.first((i, c) -> canvas.setTmpShape(ViewFactory.INSTANCE.createViewShape(c.getShape())))
+			.then((i, c) -> {
 				final MyRect sh = (MyRect) c.getShape();
 				sh.setWidth(i.getTgtLocalPoint().getX() - sh.getX());
 				sh.setHeight(i.getTgtLocalPoint().getY() - sh.getY());
-			}).
-			when(i -> i.getButton() == MouseButton.PRIMARY).
-			end((i, c) -> canvas.setTmpShape(null)).
+			})
+			.when(i -> i.getButton() == MouseButton.PRIMARY)
+			.end((i, c) -> canvas.setTmpShape(null))
 			// The UI command creation process is logged:
-			log(LogLevel.INTERACTION).
+			.log(LogLevel.INTERACTION)
 			// strict start stops the interaction if the condition ('when') is not fulfilled at an interaction start.
 			// Otherwise the interaction will run until the condition is fulfilled.
-			strictStart().
-			help(new AddRectHelpAnimation(learningPane, canvas)).
-			bind();
+			.strictStart()
+			.help(new AddRectHelpAnimation(learningPane, canvas))
+			.bind();
 
 		// A DnD interaction with the right button of the mouse moves the targeted shape.
 		// To incrementally moves the shape, the DnD interaction has its parameter 'updateSrcOnUpdate' set to true:
@@ -90,27 +91,27 @@ public class Pencil extends JfxInstrument implements Initializable {
 				return new MoveShape(sh,
 					Bindings.createDoubleBinding(() -> sh.getX() + (i.getTgtScenePoint().getX() - i.getSrcScenePoint().getX()), i.tgtScenePointProperty(), i.srcScenePointProperty()),
 					Bindings.createDoubleBinding(() -> sh.getY() + (i.getTgtScenePoint().getY() - i.getSrcScenePoint().getY()), i.tgtScenePointProperty(), i.srcScenePointProperty()));
-			}).
+			})
 			// The binding dynamically registers elements of the given observable list.
 			// When nodes are added to this list, these nodes register the binding.
 			// When nodes are removed from this list, their binding is cancelled.
 			// This permits to interact on nodes (here, shapes) that are dynamically added to/removed from the canvas.
-			on(canvas.getShapesPane().getChildren()).
-			when(i -> i.getButton() == MouseButton.SECONDARY).
+			.on(canvas.getShapesPane().getChildren())
+			.when(i -> i.getButton() == MouseButton.SECONDARY)
 			// exec(true): this allows to execute the action each time the interaction updates (and 'when' is true).
-			exec().
-			first((i, c) -> {
+			.exec()
+			.first((i, c) -> {
 				// Required to grab the focus to get key events
 				Platform.runLater(() -> i.getSrcObject().get().requestFocus());
 				i.getSrcObject().get().setEffect(new DropShadow(20d, Color.BLACK));
-			}).
-			endOrCancel((i, c) -> i.getSrcObject().get().setEffect(null)).
-			strictStart().
-			help(new MoveRectHelpAnimation(learningPane, canvas)).
+			})
+			.endOrCancel((i, c) -> i.getSrcObject().get().setEffect(null))
+			.strictStart()
+			.help(new MoveRectHelpAnimation(learningPane, canvas))
 			// Throttling the received events to reduce the number of events to process.
 			// In this specific case, this will cause a lag as a delay of 40 ms (at max).
-			throttle(40L).
-			bind();
+			.throttle(40L)
+			.bind();
 
 
 //		nodeBinder(new DnD(true, true), i -> new MoveShape(i.getSrcObject().map(o ->(MyShape) o.getUserData()).orElse(null))).
@@ -139,26 +140,30 @@ public class Pencil extends JfxInstrument implements Initializable {
 		 * Note that the feedback callback is not optimised here as the colour does not change during the DnD. The cursor
 		 * should be changed in 'first'
 		 */
-		nodeBinder(new DnD(), i -> new ChangeColour(lineCol.getValue(), null)).on(lineCol).
-			then((i, c) -> i.getTgtObject().map(view -> (MyShape) view.getUserData()).ifPresent(sh -> c.setShape(sh))).
-			when(i -> i.getTgtObject().orElse(null) instanceof Shape).
-			feedback(() -> lineCol.getScene().setCursor(new ColorCursor(lineCol.getValue()))).
-			endOrCancel((a, i) -> lineCol.getScene().setCursor(Cursor.DEFAULT)).
-			bind();
+		nodeBinder(new DnD(), i -> new ChangeColour(lineCol.getValue(), null))
+			.on(lineCol)
+			.then((i, c) -> i.getTgtObject().map(view -> (MyShape) view.getUserData()).ifPresent(sh -> c.setShape(sh)))
+			.when(i -> i.getTgtObject().orElse(null) instanceof Shape)
+			.feedback(() -> lineCol.getScene().setCursor(new ColorCursor(lineCol.getValue())))
+			.endOrCancel((i, c) -> lineCol.getScene().setCursor(Cursor.DEFAULT))
+			.bind();
 
 		/*
 		 * A mouse pressure creates an anonymous command that simply shows a message in the console.
 		 */
-		anonCmdBinder(new Press(), () -> System.out.println("An example of the anonymous command.")).on(canvas).bind();
+		anonCmdBinder(new Press(), () -> System.out.println("An example of the anonymous command."))
+			.on(canvas)
+			.bind();
 
 		/*
 		 * A widget binding that execute a command asynchronously.
 		 * Widgets and properties are provided to the binding to:
 		 * show/hide the cancel button, provide widgets with information regarding the progress of the command execution.
 		 */
-		buttonBinder(Save::new).on(save).
-			async(cancel, progressbar.progressProperty(), textProgress.textProperty()).
-			bind();
+		buttonBinder(Save::new)
+			.on(save)
+			.async(cancel, progressbar.progressProperty(), textProgress.textProperty())
+			.bind();
 	}
 
 
