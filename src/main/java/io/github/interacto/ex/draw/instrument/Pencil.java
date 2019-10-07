@@ -98,7 +98,7 @@ public class Pencil extends JfxInstrument implements Initializable {
 			// This permits to interact on nodes (here, shapes) that are dynamically added to/removed from the canvas.
 			.on(canvas.getShapesPane().getChildren())
 			.when(i -> i.getButton() == MouseButton.SECONDARY)
-			// exec(true): this allows to execute the action each time the interaction updates (and 'when' is true).
+			// this allows to execute the action each time the interaction updates (and 'when' is true).
 			.continuousExecution()
 			.first((i, c) -> {
 				// Required to grab the focus to get key events
@@ -123,7 +123,7 @@ public class Pencil extends JfxInstrument implements Initializable {
 //			.then((i, c) -> c.setCoord(c.getShape().getX() + (i.getTgtScenePoint().getX() - i.getSrcScenePoint().getX()),
 //									c.getShape().getY() + (i.getTgtScenePoint().getY() - i.getSrcScenePoint().getY())))
 //			.when(i -> i.getButton() == MouseButton.SECONDARY)
-//			// exec(true): this allows to execute the command each time the interaction updates (and 'when' is true).
+//			// this allows to execute the command each time the interaction updates (and 'when' is true).
 //			.continuousExecution()
 //			.first((i, c) -> {
 //				// Required to grab the focus to get key events
