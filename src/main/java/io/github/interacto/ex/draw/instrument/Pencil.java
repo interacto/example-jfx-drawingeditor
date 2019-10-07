@@ -70,7 +70,7 @@ public class Pencil extends JfxInstrument implements Initializable {
 				sh.setHeight(i.getTgtLocalPoint().getY() - sh.getY());
 			})
 			.when(i -> i.getButton() == MouseButton.PRIMARY)
-			.end((i, c) -> canvas.setTmpShape(null))
+			.end(i -> canvas.setTmpShape(null))
 			// The UI command creation process is logged:
 			.log(LogLevel.INTERACTION)
 			// strict start stops the interaction if the condition ('when') is not fulfilled at an interaction start.
@@ -105,7 +105,7 @@ public class Pencil extends JfxInstrument implements Initializable {
 				Platform.runLater(() -> i.getSrcObject().get().requestFocus());
 				i.getSrcObject().get().setEffect(new DropShadow(20d, Color.BLACK));
 			})
-			.endOrCancel((i, c) -> i.getSrcObject().get().setEffect(null))
+			.endOrCancel(i -> i.getSrcObject().get().setEffect(null))
 			.strictStart()
 			.help(new MoveRectHelpAnimation(learningPane, canvas))
 			// Throttling the received events to reduce the number of events to process.
@@ -114,25 +114,25 @@ public class Pencil extends JfxInstrument implements Initializable {
 			.bind();
 
 
-//		nodeBinder(new DnD(true, true), i -> new MoveShape(i.getSrcObject().map(o ->(MyShape) o.getUserData()).orElse(null))).
+//		nodeBinder(new DnD(true, true), i -> new MoveShape(i.getSrcObject().map(o ->(MyShape) o.getUserData()).orElse(null)))
 //			// The binding dynamically registers elements of the given observable list.
 //			// When nodes are added to this list, these nodes register the binding.
 //			// When nodes are removed from this list, their binding is cancelled.
 //			// This permits to interact on nodes (here, shapes) that are dynamically added to/removed from the canvas.
-//			on(canvas.getShapesPane().getChildren()).
-//			then((i, c) -> c.setCoord(c.getShape().getX() + (i.getTgtScenePoint().getX() - i.getSrcScenePoint().getX()),
-//									c.getShape().getY() + (i.getTgtScenePoint().getY() - i.getSrcScenePoint().getY()))).
-//			when(i -> i.getButton() == MouseButton.SECONDARY).
+//			.on(canvas.getShapesPane().getChildren())
+//			.then((i, c) -> c.setCoord(c.getShape().getX() + (i.getTgtScenePoint().getX() - i.getSrcScenePoint().getX()),
+//									c.getShape().getY() + (i.getTgtScenePoint().getY() - i.getSrcScenePoint().getY())))
+//			.when(i -> i.getButton() == MouseButton.SECONDARY)
 //			// exec(true): this allows to execute the command each time the interaction updates (and 'when' is true).
-//			exec(true).
-//			first((i, c) -> {
+//			.exec()
+//			.first((i, c) -> {
 //				// Required to grab the focus to get key events
 //				Platform.runLater(() -> i.getSrcObject().get().requestFocus());
 //				i.getSrcObject().get().setEffect(new DropShadow(20d, Color.BLACK));
-//			}).
-//			end((i, c) -> i.getSrcObject().get().setEffect(null)).
-//		    strictStart().
-//			bind();
+//			})
+//			.end(i -> i.getSrcObject().get().setEffect(null))
+//		    .strictStart()
+//			.bind();
 
 		/*
 		 * A DnD on the colour picker produces ChangeCol commands when the target of the DnD is a shape
@@ -142,10 +142,10 @@ public class Pencil extends JfxInstrument implements Initializable {
 		 */
 		nodeBinder(new DnD(), i -> new ChangeColour(lineCol.getValue(), null))
 			.on(lineCol)
+			.first(i -> lineCol.getScene().setCursor(new ColorCursor(lineCol.getValue())))
 			.then((i, c) -> i.getTgtObject().map(view -> (MyShape) view.getUserData()).ifPresent(sh -> c.setShape(sh)))
 			.when(i -> i.getTgtObject().orElse(null) instanceof Shape)
-			.feedback(() -> lineCol.getScene().setCursor(new ColorCursor(lineCol.getValue())))
-			.endOrCancel((i, c) -> lineCol.getScene().setCursor(Cursor.DEFAULT))
+			.endOrCancel(i -> lineCol.getScene().setCursor(Cursor.DEFAULT))
 			.bind();
 
 		/*
