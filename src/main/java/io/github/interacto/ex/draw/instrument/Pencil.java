@@ -99,7 +99,7 @@ public class Pencil extends JfxInstrument implements Initializable {
 			.on(canvas.getShapesPane().getChildren())
 			.when(i -> i.getButton() == MouseButton.SECONDARY)
 			// exec(true): this allows to execute the action each time the interaction updates (and 'when' is true).
-			.exec()
+			.continuousExecution()
 			.first((i, c) -> {
 				// Required to grab the focus to get key events
 				Platform.runLater(() -> i.getSrcObject().get().requestFocus());
@@ -124,7 +124,7 @@ public class Pencil extends JfxInstrument implements Initializable {
 //									c.getShape().getY() + (i.getTgtScenePoint().getY() - i.getSrcScenePoint().getY())))
 //			.when(i -> i.getButton() == MouseButton.SECONDARY)
 //			// exec(true): this allows to execute the command each time the interaction updates (and 'when' is true).
-//			.exec()
+//			.continuousExecution()
 //			.first((i, c) -> {
 //				// Required to grab the focus to get key events
 //				Platform.runLater(() -> i.getSrcObject().get().requestFocus());
