@@ -1,4 +1,4 @@
-package io.github.interacto.ex.draw.instrument;
+package io.github.interacto.ex.draw.presenter;
 
 import io.github.interacto.ex.draw.command.AddShape;
 import io.github.interacto.ex.draw.command.ChangeColour;
@@ -12,7 +12,6 @@ import io.github.interacto.ex.draw.model.MyShape;
 import io.github.interacto.ex.draw.view.MyCanvas;
 import io.github.interacto.ex.draw.view.ViewFactory;
 import io.github.interacto.ex.util.ColorCursor;
-import io.github.interacto.jfx.instrument.JfxInstrument;
 import io.github.interacto.jfx.interaction.library.DnD;
 import io.github.interacto.jfx.interaction.library.Press;
 import io.github.interacto.logging.LogLevel;
@@ -37,7 +36,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
-public class Pencil extends JfxInstrument implements Initializable {
+import static io.github.interacto.jfx.binding.Bindings.anonCmdBinder;
+import static io.github.interacto.jfx.binding.Bindings.buttonBinder;
+import static io.github.interacto.jfx.binding.Bindings.nodeBinder;
+
+public class Pencil implements Initializable {
 	@FXML private MyCanvas canvas;
 	@FXML private ColorPicker lineCol;
 	@FXML private Button save;
@@ -56,8 +59,7 @@ public class Pencil extends JfxInstrument implements Initializable {
 		drawing = new MyDrawing();
 	}
 
-	@Override
-	protected void configureBindings() {
+	private void configureBindings() {
 		// A DnD interaction with the left button of the mouse will produce an AddShape command while interacting on the canvas.
 		// A temporary view of the created shape is created and displayed by the canvas.
 		// This view is removed at the end of the interaction.
@@ -194,6 +196,6 @@ public class Pencil extends JfxInstrument implements Initializable {
 		textProgress.visibleProperty().bind(cancel.visibleProperty());
 		progressbar.visibleProperty().bind(cancel.visibleProperty());
 		cancel.setVisible(false);
-		setActivated(true);
+		configureBindings();
 	}
 }

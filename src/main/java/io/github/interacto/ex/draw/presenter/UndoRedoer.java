@@ -1,8 +1,7 @@
-package io.github.interacto.ex.draw.instrument;
+package io.github.interacto.ex.draw.presenter;
 
 import io.github.interacto.command.library.Redo;
 import io.github.interacto.command.library.Undo;
-import io.github.interacto.jfx.instrument.JfxInstrument;
 import io.github.interacto.jfx.undo.FXUndoCollector;
 import io.github.interacto.undo.UndoCollector;
 import java.net.URL;
@@ -13,10 +12,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 
+import static io.github.interacto.jfx.binding.Bindings.buttonBinder;
+
 /**
  * Manages undos and redos.
  */
-public class UndoRedoer extends JfxInstrument implements Initializable {
+public class UndoRedoer implements Initializable {
 	/** The button used to undo commands. */
 	@FXML private Button undoB;
 	/** The button used to redo commands. */
@@ -24,9 +25,6 @@ public class UndoRedoer extends JfxInstrument implements Initializable {
 
 	@Override
 	public void initialize(final URL location, final ResourceBundle resources) {
-		setActivated(true);
-		UndoCollector.INSTANCE.addHandler(this);
-
 		undoB.disableProperty().bind(FXUndoCollector.INSTANCE.lastUndoProperty().isNull());
 		redoB.disableProperty().bind(FXUndoCollector.INSTANCE.lastRedoProperty().isNull());
 
@@ -34,19 +32,13 @@ public class UndoRedoer extends JfxInstrument implements Initializable {
 			UndoCollector.INSTANCE.getLastUndo().map(undo -> new Tooltip(undo.getUndoName(null))).orElse(null), FXUndoCollector.INSTANCE.lastUndoProperty()));
 		redoB.tooltipProperty().bind(Bindings.createObjectBinding(() ->
 			UndoCollector.INSTANCE.getLastRedo().map(redo -> new Tooltip(redo.getUndoName(null))).orElse(null), FXUndoCollector.INSTANCE.lastRedoProperty()));
+
+		configureBindings();
 	}
 
-	@Override
-	protected void configureBindings() {
-		// Undo and Redo are commands provided by Malai.
+	private void configureBindings() {
+		// Undo and Redo are commands provided by Interacto.
 		buttonBinder(Undo::new).on(undoB).bind();
 		buttonBinder(Redo::new).on(redoB).bind();
-	}
-
-	@Override
-	public void setActivated(final boolean act) {
-		super.setActivated(act);
-		undoB.setVisible(act);
-		redoB.setVisible(act);
 	}
 }
