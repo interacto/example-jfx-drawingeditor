@@ -63,7 +63,9 @@ public class Pencil implements Initializable {
 		// A DnD interaction with the left button of the mouse will produce an AddShape command while interacting on the canvas.
 		// A temporary view of the created shape is created and displayed by the canvas.
 		// This view is removed at the end of the interaction.
-		nodeBinder(new DnD(), i -> new AddShape(drawing, new MyRect(i.getSrcLocalPoint().getX(), i.getSrcLocalPoint().getY())))
+		nodeBinder()
+			.usingInteraction(DnD::new)
+			.toProduce(i -> new AddShape(drawing, new MyRect(i.getSrcLocalPoint().getX(), i.getSrcLocalPoint().getY())))
 			.on(canvas)
 			.first((i, c) -> canvas.setTmpShape(ViewFactory.INSTANCE.createViewShape(c.getShape())))
 			.then((i, c) -> {
@@ -85,10 +87,11 @@ public class Pencil implements Initializable {
 		// To incrementally moves the shape, the DnD interaction has its parameter 'updateSrcOnUpdate' set to true:
 		// At each interaction updates, the source point and object take the latest target point and object.
 		// The DnD interaction can be stopped (aborted) by pressing the key 'ESC'. This cancels the ongoing command (that thus needs to be undoable).
-		nodeBinder(new DnD(true, true),
+		nodeBinder()
 			// The command is created using two double bindings that are automatically updated on changes.
 			// In the command these binding are @autoUnbind to be unbound on their command termination.
-			i -> {
+			.usingInteraction(() -> new DnD(true, true))
+			.toProduce(i -> {
 				final MyShape sh = i.getSrcObject().map(o -> (MyShape) o.getUserData()).get();
 				return new MoveShape(sh,
 					Bindings.createDoubleBinding(() -> sh.getX() + (i.getTgtScenePoint().getX() - i.getSrcScenePoint().getX()), i.tgtScenePointProperty(), i.srcScenePointProperty()),
@@ -116,7 +119,9 @@ public class Pencil implements Initializable {
 			.bind();
 
 
-//		nodeBinder(new DnD(true, true), i -> new MoveShape(i.getSrcObject().map(o ->(MyShape) o.getUserData()).orElse(null)))
+//		nodeBinder()
+//			.usingInteraction(() -> new DnD(true, true))
+//			.toProduce(i -> new MoveShape(i.getSrcObject().map(o ->(MyShape) o.getUserData()).orElse(null)))
 //			// The binding dynamically registers elements of the given observable list.
 //			// When nodes are added to this list, these nodes register the binding.
 //			// When nodes are removed from this list, their binding is cancelled.
@@ -142,7 +147,9 @@ public class Pencil implements Initializable {
 		 * Note that the feedback callback is not optimised here as the colour does not change during the DnD. The cursor
 		 * should be changed in 'first'
 		 */
-		nodeBinder(new DnD(), i -> new ChangeColour(lineCol.getValue(), null))
+		nodeBinder()
+			.usingInteraction(DnD::new)
+			.toProduce(i -> new ChangeColour(lineCol.getValue(), null))
 			.on(lineCol)
 			.first(i -> lineCol.getScene().setCursor(new ColorCursor(lineCol.getValue())))
 			.then((i, c) -> i.getTgtObject().map(view -> (MyShape) view.getUserData()).ifPresent(sh -> c.setShape(sh)))
@@ -153,7 +160,8 @@ public class Pencil implements Initializable {
 		/*
 		 * A mouse pressure creates an anonymous command that simply shows a message in the console.
 		 */
-		anonCmdBinder(new Press(), () -> System.out.println("An example of the anonymous command."))
+		anonCmdBinder(() -> System.out.println("An example of the anonymous command."))
+			.usingInteraction(Press::new)
 			.on(canvas)
 			.bind();
 
@@ -162,7 +170,8 @@ public class Pencil implements Initializable {
 		 * Widgets and properties are provided to the binding to:
 		 * show/hide the cancel button, provide widgets with information regarding the progress of the command execution.
 		 */
-		buttonBinder(Save::new)
+		buttonBinder()
+			.toProduce(Save::new)
 			.on(save)
 			.async(cancel, progressbar.progressProperty(), textProgress.textProperty())
 			.bind();

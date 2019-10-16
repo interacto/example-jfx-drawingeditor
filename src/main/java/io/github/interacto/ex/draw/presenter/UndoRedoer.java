@@ -38,7 +38,14 @@ public class UndoRedoer implements Initializable {
 
 	private void configureBindings() {
 		// Undo and Redo are commands provided by Interacto.
-		buttonBinder(Undo::new).on(undoB).bind();
-		buttonBinder(Redo::new).on(redoB).bind();
+		buttonBinder()
+			.toProduce(Undo::new)
+			.on(undoB)
+			.bind();
+
+		buttonBinder()
+			.on(redoB)
+			.toProduce(Redo::new)
+			.bind();
 	}
 }
