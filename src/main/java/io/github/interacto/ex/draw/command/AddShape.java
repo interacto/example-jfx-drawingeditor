@@ -6,8 +6,8 @@ import io.github.interacto.undo.Undoable;
 import java.util.ResourceBundle;
 
 /*
- * Defines a Malai command that adds a shape into a drawing.
- * A Malai command must inherits from Command.
+ * Defines a command that adds a shape into a drawing.
+ * A command must inherits from CommandImpl.
  * A command may be undoable. In such a case, it must implements
  * the interface Undoable.
  */
@@ -18,9 +18,6 @@ public class AddShape extends ShapeCmd implements Undoable {
 	 */
 	private final MyDrawing drawing;
 
-	/*
-	 * A Malai command must have a constructor having NO parameter.
-	 */
 	public AddShape(final MyDrawing drawing, final MyShape shape) {
 		super(shape);
 		this.drawing = drawing;
