@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.interacto</groupId>
     <artifactId>example-jfx-drawingeditor</artifactId>
-    <version>4.0-SNAPSHOT</version>
+    <version>4.0</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -175,21 +175,14 @@
         </dependency>
     </dependencies>
 
-    <repositories>
-        <repository>
-            <id>mavenInriaSnapshot</id>
-            <name>http://maven.inria.fr-snapshots</name>
-            <url>http://maven.inria.fr/artifactory/malai-public-snapshot</url>
-            <snapshots><enabled>true</enabled></snapshots>
-            <releases><enabled>false</enabled></releases>
-        </repository>
-        <repository>
-            <id>mavenInriaRelease</id>
-            <name>http://maven.inria.fr-releases</name>
-            <url>http://maven.inria.fr/artifactory/malai-public-release</url>
-            <snapshots><enabled>false</enabled></snapshots>
-            <releases><enabled>true</enabled></releases>
-        </repository>
-    </repositories>
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>mavenInriaSnapshot</id>-->
+<!--            <name>http://maven.inria.fr-snapshots</name>-->
+<!--            <url>http://maven.inria.fr/artifactory/malai-public-snapshot</url>-->
+<!--            <snapshots><enabled>true</enabled></snapshots>-->
+<!--            <releases><enabled>false</enabled></releases>-->
+<!--        </repository>-->
+<!--    </repositories>-->
 </project>
 
