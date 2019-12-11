@@ -4,6 +4,7 @@ module interacto.ex.drawingEditor {
 	requires javafx.base;
 	requires javafx.fxml;
 	requires javafx.controls;
+	requires io.reactivex.rxjava2;
 
 	exports io.github.interacto.ex.draw to javafx.graphics;
 	exports io.github.interacto.ex.draw.presenter to javafx.fxml;

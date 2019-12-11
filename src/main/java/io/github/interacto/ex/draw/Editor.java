@@ -20,7 +20,7 @@ public class Editor extends Application {
 		 * When the threshold is reached, the oldest stored
 		 * command is flushed.
 		 */
-		UndoCollector.INSTANCE.setSizeMax(30);
+		UndoCollector.getInstance().setSizeMax(30);
 
 		/*
 		 * In the same way, the number of commands that can
@@ -31,7 +31,7 @@ public class Editor extends Application {
 		 * When the threshold is reached, the oldest stored
 		 * command is flushed.
 		 */
-		CommandsRegistry.INSTANCE.setSizeMax(30);
+		CommandsRegistry.getInstance().setSizeMax(30);
 	}
 
 	public static void main(final String[] args) {
