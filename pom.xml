@@ -46,6 +46,90 @@
             </plugin>
 
             <plugin>
+                <groupId>org.moditect</groupId>
+                <artifactId>moditect-maven-plugin</artifactId>
+                <version>1.0.0.Beta2</version>
+                <executions>
+                    <execution>
+                        <id>generate-module-info</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate-module-info</goal>
+                        </goals>
+                        <configuration>
+                            <modules>
+                                <module>
+                                    <artifact>
+                                        <groupId>io.reactivex.rxjava2</groupId>
+                                        <artifactId>rxjava</artifactId>
+                                        <version>2.2.4</version>
+                                    </artifact>
+                                    <moduleInfo>
+                                        <name>io.reactivex.rxjava2</name>
+                                        <exports>
+                                            *;
+                                        </exports>
+                                        <requires>
+                                            *;
+                                        </requires>
+                                    </moduleInfo>
+                                </module>
+                                <module>
+                                    <artifact>
+                                        <groupId>org.reactivestreams</groupId>
+                                        <artifactId>reactive-streams</artifactId>
+                                        <version>1.0.2</version>
+                                    </artifact>
+                                    <moduleInfo>
+                                        <name>org.reactivestreams</name>
+                                        <exports>
+                                            *;
+                                        </exports>
+                                        <requires>
+                                            *;
+                                        </requires>
+                                    </moduleInfo>
+                                </module>
+                            </modules>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>add-module-infos</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>add-module-info</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/modules</outputDirectory>
+                            <modules>
+                                <module>
+                                    <artifact>
+                                        <groupId>io.reactivex.rxjava2</groupId>
+                                        <artifactId>rxjava</artifactId>
+                                        <version>2.2.4</version>
+                                    </artifact>
+                                    <moduleInfoFile>
+                                        ${project.build.directory}/moditect/io.reactivex.rxjava2/module-info.java
+                                    </moduleInfoFile>
+                                </module>
+                                <module>
+                                    <artifact>
+                                        <groupId>org.reactivestreams</groupId>
+                                        <artifactId>reactive-streams</artifactId>
+                                        <version>1.0.2</version>
+                                    </artifact>
+                                    <moduleInfoFile>
+                                        ${project.build.directory}/moditect/org.reactivestreams/module-info.java
+                                    </moduleInfoFile>
+                                </module>
+                            </modules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.1.1</version>
                 <configuration>
@@ -66,6 +150,7 @@
                         </goals>
                         <configuration>
                             <excludeClassifiers>linux,win,mac</excludeClassifiers>
+                            <excludeGroupIds>org.reactivestreams,io.reactivex.rxjava2</excludeGroupIds>
                             <outputDirectory>
                                 ${project.build.directory}/modules
                             </outputDirectory>
@@ -142,12 +227,6 @@
             <groupId>io.github.interacto</groupId>
             <artifactId>interacto-javafx</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-base</artifactId>
-            <version>${jfx.version}</version>
-            <classifier>${javafx.platform}</classifier>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
