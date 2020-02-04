@@ -49,4 +49,12 @@ public class MoveShape extends ShapeCmd implements Undoable {
 	public String getUndoName(final ResourceBundle bundle) {
 		return "Shape moved";
 	}
+
+	public double getNewX() {
+		return newX.get();
+	}
+
+	public double getNewY() {
+		return newY.get();
+	}
 }

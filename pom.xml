@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.interacto</groupId>
     <artifactId>example-jfx-drawingeditor</artifactId>
-    <version>4.0</version>
+    <version>4.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -36,7 +36,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -219,6 +219,32 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M4</version>
+                <configuration>
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <useModulePath>false</useModulePath>
+                    <argLine>
+                        --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                        --add-exports javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
+                        --add-exports javafx.graphics/com.sun.glass.ui.delegate=ALL-UNNAMED
+                        --add-exports interacto.ex.drawingEditor/io.github.interacto.ex.draw.model=ALL-UNNAMED
+                        --add-exports interacto.ex.drawingEditor/io.github.interacto.ex.draw.command=ALL-UNNAMED
+                        --add-opens javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
+                        --add-opens interacto.ex.drawingEditor/io.github.interacto.ex.draw.model=ALL-UNNAMED
+                        --add-opens interacto.ex.drawingEditor/io.github.interacto.ex.draw.command=ALL-UNNAMED
+                        -Xmx4000m
+                        -Dglass.platform=Monocle
+                        -Dheadless.geometry=1280x1024-32
+                        -Djava.awt.headless=true
+                        -Dtestfx.robot=glass
+                        -Dtestfx.headless=true
+                        -Dprism.order=sw</argLine>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -252,16 +278,47 @@
             <version>${jfx.version}</version>
             <classifier>${javafx.platform}</classifier>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.interacto</groupId>
+            <artifactId>interacto-javafx-test</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-junit5</artifactId>
+            <version>4.0.16-alpha</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.2.4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>openjfx-monocle</artifactId>
+            <version>jdk-11+26</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>mavenInriaSnapshot</id>-->
-<!--            <name>http://maven.inria.fr-snapshots</name>-->
-<!--            <url>http://maven.inria.fr/artifactory/malai-public-snapshot</url>-->
-<!--            <snapshots><enabled>true</enabled></snapshots>-->
-<!--            <releases><enabled>false</enabled></releases>-->
-<!--        </repository>-->
-<!--    </repositories>-->
+    <repositories>
+        <repository>
+            <id>mavenInriaSnapshot</id>
+            <name>http://maven.inria.fr-snapshots</name>
+            <url>http://maven.inria.fr/artifactory/malai-public-snapshot</url>
+            <snapshots><enabled>true</enabled></snapshots>
+            <releases><enabled>false</enabled></releases>
+        </repository>
+    </repositories>
 </project>
 

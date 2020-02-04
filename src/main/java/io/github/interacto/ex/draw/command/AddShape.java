@@ -46,7 +46,7 @@ public class AddShape extends ShapeCmd implements Undoable {
 	@Override
 	public void undo() {
 		/* Defines what to do for undoing the action. */
-		drawing.getShapes().remove(shape);
+		drawing.removeShape(shape);
 	}
 
 	@Override

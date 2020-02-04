@@ -65,7 +65,7 @@ public class Pencil implements Initializable {
 		// This view is removed at the end of the interaction.
 		nodeBinder()
 			.usingInteraction(DnD::new)
-			.toProduce(i -> new AddShape(drawing, new MyRect(i.getSrcLocalPoint().getX(), i.getSrcLocalPoint().getY())))
+			.toProduce(i -> new AddShape(drawing, new MyRect(i.getSrcLocalPoint().getX(), i.getSrcLocalPoint().getY(), 1, 1)))
 			.on(canvas)
 			.first((i, c) -> canvas.setTmpShape(ViewFactory.INSTANCE.createViewShape(c.getShape())))
 			.then((i, c) -> {
@@ -115,7 +115,7 @@ public class Pencil implements Initializable {
 			.help(new MoveRectHelpAnimation(learningPane, canvas))
 			// Throttling the received events to reduce the number of events to process.
 			// In this specific case, this will cause a lag as a delay of 40 ms (at max).
-			.throttle(40L)
+//			.throttle(40L)
 			.bind();
 
 
@@ -190,11 +190,6 @@ public class Pencil implements Initializable {
 					shapesPane.getChildren().addAll(
 						ch.getAddedSubList().stream().map(sh -> ViewFactory.INSTANCE.createViewShape(sh)).filter(Objects::nonNull).collect(Collectors.toList()));
 				}
-				if(ch.wasRemoved()) {
-					shapesPane.getChildren().removeAll(
-						ch.getRemoved().stream().map(sh -> shapesPane.getChildren().stream().filter(v -> v.getUserData() == sh).findAny().orElse(null)).
-							filter(Objects::nonNull).collect(Collectors.toList()));
-				}
 			}
 		});
 	}
@@ -206,5 +201,9 @@ public class Pencil implements Initializable {
 		progressbar.visibleProperty().bind(cancel.visibleProperty());
 		cancel.setVisible(false);
 		configureBindings();
+	}
+
+	public MyDrawing getDrawing() {
+		return drawing;
 	}
 }

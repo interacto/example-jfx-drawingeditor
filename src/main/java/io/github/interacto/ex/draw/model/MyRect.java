@@ -7,10 +7,10 @@ public class MyRect extends MyShape {
 	private final DoubleProperty width;
 	private final DoubleProperty height;
 
-	public MyRect(final double x, final double y) {
+	public MyRect(final double x, final double y, final double w, final double h) {
 		super(x, y);
-		width = new SimpleDoubleProperty(1d);
-		height = new SimpleDoubleProperty(1d);
+		width = new SimpleDoubleProperty(w);
+		height = new SimpleDoubleProperty(h);
 	}
 
 

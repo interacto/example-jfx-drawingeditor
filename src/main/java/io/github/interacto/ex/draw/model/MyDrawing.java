@@ -18,4 +18,8 @@ public class MyDrawing {
 	public void addShape(final MyShape sh) {
 		shapes.add(sh);
 	}
+
+	public void removeShape(final MyShape sh) {
+		shapes.remove(sh);
+	}
 }
