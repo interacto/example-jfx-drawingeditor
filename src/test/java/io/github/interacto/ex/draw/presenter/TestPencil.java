@@ -4,10 +4,12 @@ import io.github.interacto.ex.draw.command.AddShape;
 import io.github.interacto.ex.draw.command.ChangeColour;
 import io.github.interacto.ex.draw.command.MoveShape;
 import io.github.interacto.ex.draw.model.MyRect;
+import io.github.interacto.ex.draw.model.MyShape;
 import io.github.interacto.jfx.interaction.library.SrcTgtPointsData;
 import java.io.IOException;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.JavaFXBuilderFactory;
 import javafx.geometry.Point2D;
 import javafx.geometry.Point3D;
 import javafx.scene.Scene;
@@ -26,9 +28,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ApplicationExtension.class)
 public class TestPencil extends TestPencilBase {
+	MyShape shape;
+
 	@Start
 	void start(final Stage stage) throws IOException {
-		final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UI.fxml"));
+		final FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UI.fxml"),
+			null, new JavaFXBuilderFactory(), cl -> {
+			if(cl == Pencil.class) {
+				return new Pencil();
+			}
+			return Mockito.mock(cl);
+		});
 		stage.setScene(new Scene(loader.load()));
 		stage.show();
 		pencil = loader.getController();

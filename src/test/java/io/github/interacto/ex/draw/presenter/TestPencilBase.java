@@ -3,7 +3,6 @@ package io.github.interacto.ex.draw.presenter;
 import io.github.interacto.ex.draw.command.AddShape;
 import io.github.interacto.ex.draw.command.ChangeColour;
 import io.github.interacto.ex.draw.command.MoveShape;
-import io.github.interacto.ex.draw.model.MyShape;
 import io.github.interacto.ex.draw.view.MyCanvas;
 import io.github.interacto.jfx.interaction.library.SrcTgtPointsData;
 import io.github.interacto.jfx.test.BindingsContext;
@@ -24,18 +23,17 @@ public abstract class TestPencilBase {
 	MyCanvas canvas;
 	ColorPicker lineCol;
 	Button save;
-	MyShape shape;
 
 	@BeforeEach
 	void setUp(final FxRobot robot) {
 		canvas = robot.lookup("#canvas").query();
 		lineCol = robot.lookup("#lineCol").query();
-		save = robot.lookup("#save").queryButton();
+		save = robot.lookup("#save").query();
 	}
 
 	@Test
 	void testNumberOfBindings(final BindingsContext ctx) {
-		ctx.hasBindings(7);
+		ctx.hasBindings(5);
 	}
 
 	void activateDnDOnCanvasToAddShape(final FxRobot robot) {
