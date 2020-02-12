@@ -25,7 +25,7 @@ public class ChangeColourTest extends UndoableCmdTest<ChangeColour> {
 	}
 
 	@Override
-	protected Stream<Runnable> cannotDoConfigurations() {
+	protected Stream<Runnable> cannotDoFixtures() {
 		return Stream.of(() -> {
 			newCol = Color.LIGHTGRAY;
 			cmd = new ChangeColour(newCol, null);
@@ -36,7 +36,7 @@ public class ChangeColourTest extends UndoableCmdTest<ChangeColour> {
 	}
 
 	@Override
-	protected Stream<Runnable> canDoConfigurations() {
+	protected Stream<Runnable> canDoFixtures() {
 		return Stream.of(() -> {
 			newCol = Color.CORAL;
 			mementoCol = Color.CORNSILK;

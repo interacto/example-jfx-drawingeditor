@@ -26,12 +26,12 @@ public class MoveShapeTest extends UndoableCmdTest<MoveShape> {
 	}
 
 	@Override
-	protected Stream<Runnable> cannotDoConfigurations() {
+	protected Stream<Runnable> cannotDoFixtures() {
 		return Stream.of(() -> cmd = new MoveShape(null, Mockito.mock(DoubleBinding.class), Mockito.mock(DoubleBinding.class)));
 	}
 
 	@Override
-	protected Stream<Runnable> canDoConfigurations() {
+	protected Stream<Runnable> canDoFixtures() {
 		return Stream.of(() -> {
 			newX = Bindings.createDoubleBinding(() -> 5d);
 			newY = Bindings.createDoubleBinding(() -> 15d);

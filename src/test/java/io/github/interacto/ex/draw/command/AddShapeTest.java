@@ -24,7 +24,7 @@ public class AddShapeTest extends UndoableCmdTest<AddShape> {
 	}
 
 	@Override
-	protected Stream<Runnable> cannotDoConfigurations() {
+	protected Stream<Runnable> cannotDoFixtures() {
 		return Stream.of(
 			() -> {
 				drawing = Mockito.mock(MyDrawing.class);
@@ -43,7 +43,7 @@ public class AddShapeTest extends UndoableCmdTest<AddShape> {
 	}
 
 	@Override
-	protected Stream<Runnable> canDoConfigurations() {
+	protected Stream<Runnable> canDoFixtures() {
 		return Stream.of(
 			() -> {
 				drawing = Mockito.mock(MyDrawing.class);
@@ -63,73 +63,4 @@ public class AddShapeTest extends UndoableCmdTest<AddShape> {
 	protected Runnable undoChecker() {
 		return () -> Mockito.verify(drawing, times(nbExec)).removeShape(shape);
 	}
-
-	//	@Nested
-//	class TestAddShapeKO {
-//		@Test
-//		void testShapeNull() {
-//			drawing = Mockito.mock(MyDrawing.class);
-//			cmd = new AddShape(drawing, shape);
-//			assertThat(cmd.canDo()).isFalse();
-//		}
-//		@Test
-//		void testDrawingNull() {
-//			shape = Mockito.mock(MyShape.class);
-//			cmd = new AddShape(drawing, shape);
-//			assertThat(cmd.canDo()).isFalse();
-//		}
-//		@Test
-//		void testDrawingAlreadyContains() {
-//			drawing = Mockito.mock(MyDrawing.class);
-//			shape = Mockito.mock(MyShape.class);
-//			cmd = new AddShape(drawing, shape);
-//			Mockito.when(drawing.getShapes()).thenReturn(FXCollections.observableArrayList(shape));
-//			assertThat(cmd.canDo()).isFalse();
-//		}
-//	}
-//
-//	@Nested
-//	class TestAddShapeOK {
-//		@BeforeEach
-//		void setUp() {
-//			drawing = Mockito.mock(MyDrawing.class);
-//			shape = Mockito.mock(MyShape.class);
-//			Mockito.when(drawing.getShapes()).thenReturn(FXCollections.observableArrayList());
-//			cmd = new AddShape(drawing, shape);
-//		}
-//
-//		@Test
-//		void testCanBeDone() {
-//			assertThat(cmd.canDo()).isTrue();
-//		}
-//
-//		@Test
-//		void testShapeAdded() {
-//			cmd.doIt();
-//			cmd.done();
-//			Mockito.verify(drawing).addShape(shape);
-//		}
-//
-//		@Test
-//		void testUndo() {
-//			cmd.doIt();
-//			cmd.done();
-//			cmd.undo();
-//			Mockito.verify(drawing).removeShape(shape);
-//		}
-//
-//		@Test
-//		void testRedo() {
-//			cmd.doIt();
-//			cmd.done();
-//			cmd.undo();
-//			cmd.redo();
-//			Mockito.verify(drawing, Mockito.times(2)).addShape(shape);
-//		}
-//
-//		@Test
-//		void testUndoName() {
-//			assertThat(cmd.getUndoName(null)).isNotEmpty();
-//		}
-//	}
 }
