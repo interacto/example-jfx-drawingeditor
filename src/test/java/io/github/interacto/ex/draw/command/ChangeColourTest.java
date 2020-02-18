@@ -47,12 +47,12 @@ public class ChangeColourTest extends UndoableCmdTest<ChangeColour> {
 	}
 
 	@Override
-	protected Runnable doChecker() {
-		return () -> Mockito.verify(shape, times(nbExec)).setLineColor(newCol);
+	protected Stream<Runnable> doCheckers() {
+		return Stream.of(() -> Mockito.verify(shape, times(nbExec)).setLineColor(newCol));
 	}
 
 	@Override
-	protected Runnable undoChecker() {
-		return () -> Mockito.verify(shape, times(nbExec)).setLineColor(mementoCol);
+	protected Stream<Runnable> undoCheckers() {
+		return Stream.of(() -> Mockito.verify(shape, times(nbExec)).setLineColor(mementoCol));
 	}
 }

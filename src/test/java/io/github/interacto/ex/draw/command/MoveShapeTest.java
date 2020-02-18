@@ -43,18 +43,18 @@ public class MoveShapeTest extends UndoableCmdTest<MoveShape> {
 	}
 
 	@Override
-	protected Runnable doChecker() {
-		return () -> {
+	protected Stream<Runnable> doCheckers() {
+		return Stream.of(() -> {
 			Mockito.verify(shape, Mockito.times(nbExec)).setX(5d);
 			Mockito.verify(shape, Mockito.times(nbExec)).setY(15d);
-		};
+		});
 	}
 
 	@Override
-	protected Runnable undoChecker() {
-		return () -> {
+	protected Stream<Runnable> undoCheckers() {
+		return Stream.of(() -> {
 			Mockito.verify(shape, Mockito.times(nbExec)).setX(10d);
 			Mockito.verify(shape, Mockito.times(nbExec)).setY(20d);
-		};
+		});
 	}
 }

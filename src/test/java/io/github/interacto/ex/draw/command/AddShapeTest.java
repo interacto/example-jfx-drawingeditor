@@ -54,13 +54,12 @@ public class AddShapeTest extends UndoableCmdTest<AddShape> {
 	}
 
 	@Override
-	protected Runnable doChecker() {
-		return () ->
-			Mockito.verify(drawing, times(nbExec)).addShape(shape);
+	protected Stream<Runnable> doCheckers() {
+		return Stream.of(() -> Mockito.verify(drawing, times(nbExec)).addShape(shape));
 	}
 
 	@Override
-	protected Runnable undoChecker() {
-		return () -> Mockito.verify(drawing, times(nbExec)).removeShape(shape);
+	protected Stream<Runnable> undoCheckers() {
+		return Stream.of(() -> Mockito.verify(drawing, times(nbExec)).removeShape(shape));
 	}
 }
