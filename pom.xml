@@ -53,11 +53,12 @@
                 <executions>
                     <execution>
                         <id>generate-module-info</id>
-                        <phase>generate-sources</phase>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>generate-module-info</goal>
                         </goals>
                         <configuration>
+                            <outputDirectory>${project.build.directory}/module-info-gen</outputDirectory>
                             <modules>
                                 <module>
                                     <artifact>
@@ -65,15 +66,6 @@
                                         <artifactId>rxjava</artifactId>
                                         <version>2.2.4</version>
                                     </artifact>
-                                    <moduleInfo>
-                                        <name>io.reactivex.rxjava2</name>
-                                        <exports>
-                                            *;
-                                        </exports>
-                                        <requires>
-                                            *;
-                                        </requires>
-                                    </moduleInfo>
                                 </module>
                                 <module>
                                     <artifact>
@@ -81,15 +73,6 @@
                                         <artifactId>reactive-streams</artifactId>
                                         <version>1.0.2</version>
                                     </artifact>
-                                    <moduleInfo>
-                                        <name>org.reactivestreams</name>
-                                        <exports>
-                                            *;
-                                        </exports>
-                                        <requires>
-                                            *;
-                                        </requires>
-                                    </moduleInfo>
                                 </module>
                             </modules>
                         </configuration>
@@ -97,7 +80,7 @@
 
                     <execution>
                         <id>add-module-infos</id>
-                        <phase>generate-resources</phase>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>add-module-info</goal>
                         </goals>
@@ -111,7 +94,7 @@
                                         <version>2.2.4</version>
                                     </artifact>
                                     <moduleInfoFile>
-                                        ${project.build.directory}/moditect/io.reactivex.rxjava2/module-info.java
+                                        ${project.build.directory}/module-info-gen/io.reactivex.rxjava2/module-info.java
                                     </moduleInfoFile>
                                 </module>
                                 <module>
@@ -121,7 +104,7 @@
                                         <version>1.0.2</version>
                                     </artifact>
                                     <moduleInfoFile>
-                                        ${project.build.directory}/moditect/org.reactivestreams/module-info.java
+                                        ${project.build.directory}/module-info-gen/org.reactivestreams/module-info.java
                                     </moduleInfoFile>
                                 </module>
                             </modules>
